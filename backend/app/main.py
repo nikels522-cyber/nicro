@@ -11,6 +11,7 @@ from sqlalchemy import select
 from . import config, settings_store
 from .api import router
 from .cores.devices import access_log, devices
+from .cores import reaper
 from .cores.hysteria import hy_id
 from .cores.manager import manager
 from .db import Device, SessionLocal, User, init_db, utcnow
@@ -49,7 +50,8 @@ async def lifespan(_: FastAPI):
              asyncio.create_task(l2tp.loop()),
              asyncio.create_task(payments.check_loop()),
              asyncio.create_task(health.loop()),
-             asyncio.create_task(support.staff_bot.loop())]
+             asyncio.create_task(support.staff_bot.loop()),
+             asyncio.create_task(reaper.loop())]
     yield
     for t in tasks:
         t.cancel()
