@@ -1,4 +1,4 @@
-// nicro for Android: the web panel in its own app window (WebView). Built by GitHub Actions
+// nicro for Android: the web panel in its own app window (WebView, no third-party libraries). Built by GitHub Actions
 // (.github/workflows/android.yml) and published as the "android-latest" release asset nicro.apk.
 plugins {
     id("com.android.application")
