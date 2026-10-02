@@ -1,0 +1,10 @@
+fastapi>=0.115
+uvicorn[standard]>=0.32
+sqlalchemy>=2.0
+pyjwt>=2.9
+bcrypt>=4.2
+psutil>=6.1
+httpx>=0.28
+cryptography>=43
+qrcode>=7.4
+grpcio>=1.60

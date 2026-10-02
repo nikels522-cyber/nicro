@@ -1,0 +1,30 @@
+# зависимости и сборка
+node_modules/
+dist/
+pkg/
+pkg.tgz
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# секреты и локальные данные
+.env
+*.env
+*.db
+*.sqlite
+*.key
+*.pem
+
+# редакторы/ОС
+.vscode/
+.idea/
+Thumbs.db
+.DS_Store
+
+# Android build outputs
+android/.gradle/
+android/**/build/
+android/local.properties

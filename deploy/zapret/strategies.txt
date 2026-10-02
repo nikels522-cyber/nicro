@@ -1,0 +1,15 @@
+# nicro: DPI bypass strategies for entry points (zapret / nfqws options), tried top to bottom.
+# The entry point downloads this list from the repository every 6 hours (nicro-zapret.sh update) and
+# switches to the first strategy that gets traffic through when the direct path stops working.
+# One strategy per line; "#" starts a comment. Traffic to the main server begins with a PROXY protocol header,
+# so the options include --dpi-desync-any-protocol where nfqws must act on non-TLS payloads.
+--dpi-desync=fake,multisplit --dpi-desync-split-pos=1 --dpi-desync-fooling=badseq --dpi-desync-repeats=6 --dpi-desync-any-protocol
+--dpi-desync=multisplit --dpi-desync-split-pos=1,2 --dpi-desync-split-seqovl=1 --dpi-desync-any-protocol
+--dpi-desync=fake --dpi-desync-fooling=md5sig --dpi-desync-repeats=6 --dpi-desync-any-protocol
+--dpi-desync=fakedsplit --dpi-desync-split-pos=1 --dpi-desync-fooling=badseq --dpi-desync-any-protocol
+--dpi-desync=multidisorder --dpi-desync-split-pos=1,3 --dpi-desync-any-protocol
+--dpi-desync=fake,multidisorder --dpi-desync-split-pos=2 --dpi-desync-fooling=md5sig,badseq --dpi-desync-repeats=11 --dpi-desync-any-protocol
+--dpi-desync=fake --dpi-desync-ttl=4 --dpi-desync-repeats=6 --dpi-desync-any-protocol
+--dpi-desync=syndata --dpi-desync-any-protocol
+--dpi-desync=fake,fakedsplit --dpi-desync-split-pos=1 --dpi-desync-fooling=datanoack --dpi-desync-any-protocol
+--dpi-desync=multisplit --dpi-desync-split-pos=2 --dpi-desync-split-seqovl=681 --dpi-desync-any-protocol

@@ -1,0 +1,34 @@
+# Builds the web interface on every push to main and publishes it as the "frontend-main" release:
+# install.sh downloads it instead of installing Node.js on the server (it builds locally as a fallback).
+name: frontend build
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: frontend-release
+  cancel-in-progress: true
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - name: Build
+        working-directory: frontend
+        run: npm ci --no-audit --no-fund && npx tsc --noEmit && npx vite build
+      - name: Package
+        run: echo "$GITHUB_SHA" > frontend/dist/SOURCE_SHA && tar -czf nicro-frontend.tar.gz -C frontend/dist .
+      - name: Publish release frontend-main
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release delete frontend-main --yes --cleanup-tag || true
+          gh release create frontend-main nicro-frontend.tar.gz --prerelease --target "$GITHUB_SHA" \
+            --title "Web interface build (main)" --notes "Built automatically from $GITHUB_SHA for install.sh"

@@ -1,0 +1,38 @@
+@import "tailwindcss";
+
+/* nicro design system: deep indigo night, violet→cyan accent, soft glass surfaces */
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --color-bg: #0a0b14;
+  --color-panel: #12131f;
+  --color-panel-2: #1a1c2c;
+  --color-line: #262840;
+  --color-muted: #8b8fa8;
+  --color-accent: #7c6cff;
+  --color-accent-2: #22d3ee;
+  --color-ok: #34d399;
+}
+
+html, body, #root { height: 100%; }
+body {
+  background: var(--color-bg); color: #eceef6; -webkit-font-smoothing: antialiased;
+  background-image: radial-gradient(60rem 30rem at 85% -10rem, rgba(124,108,255,.10), transparent),
+                    radial-gradient(40rem 24rem at -10% 110%, rgba(34,211,238,.06), transparent);
+  background-attachment: fixed;
+}
+
+/* component classes live in a layer so utilities (pl-9, w-auto, p-8…) can override them */
+@layer components {
+  .card { @apply rounded-2xl border border-line bg-panel/90 p-5 shadow-[0_1px_0_rgba(255,255,255,.03)_inset] backdrop-blur; }
+  .btn { @apply inline-flex items-center justify-center gap-2 rounded-xl px-3.5 py-2 text-sm font-medium transition active:scale-[.98] disabled:opacity-50 disabled:active:scale-100 cursor-pointer; }
+  .btn-primary { @apply bg-gradient-to-br from-accent to-[#5b4ee8] text-white shadow-lg shadow-accent/20 hover:brightness-110; }
+  .btn-ghost { @apply border border-line bg-panel-2 hover:bg-line; }
+  .btn-danger { @apply border border-red-500/30 bg-red-500/10 text-red-300 hover:bg-red-500/20; }
+  .input { @apply w-full rounded-xl border border-line bg-bg/80 px-3 py-2 text-sm outline-none transition focus:border-accent focus:ring-2 focus:ring-accent/20; }
+  .label { @apply mb-1.5 block text-xs font-medium text-muted; }
+  .grad-text { @apply bg-gradient-to-r from-accent to-accent-2 bg-clip-text text-transparent; }
+  .pill { @apply inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-xs font-medium; }
+}
+
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-thumb { background: #2c2f4a; border-radius: 8px; }
